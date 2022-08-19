@@ -1,0 +1,9 @@
+{
+    "ntx": 12,
+    "nrx": 16,
+    "numChirpLoops": 16,
+    "numAdcSamples": 256,
+    "startFrequency_Ghz": 77,
+    "adcSamplingFrequency_ksps": 8000,
+    "frequencySlope_Mhz_us": 79.0327
+}
