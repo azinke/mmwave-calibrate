@@ -4,11 +4,11 @@ Tool to generate the calibrtion matrices for the MMWCAS-RF-EVM radar.
 
 This tool allow to regenrate three types of calibration matrices:
 - Coupling calibration
-- Phase calibration
+- Phase and amplitude calibration
 - Frequency calibration
 
 For generating the coupling calibration, one need to record some data with
-the board, with no target in sight.
+the MMWCAS-RF evaluation module, with no target in sight.
 
 For the frequency and phase calibration, at target (more precisely a corner
 reflector) should be placed at a knwon distance (knwon as the reference distance)
@@ -59,7 +59,7 @@ Use the help to see all the possible options.
 # Coupling calibration
 python calibrate.py -c -i /home/user/calib0/frame_1.bin
 
-# Phase and Frequency calibration
+# Phase, Amplitude and Frequency calibration
 python calibrate.py -w -f config/default-calib.json -i /home/user/calib1/frame_1.bin -ref 5.0
 ```
 
@@ -75,10 +75,11 @@ nrx: int = 16       # Number of RX antenna
 
 # Coupling calibration
 coupling_calib = np.fromfile("counpling_calibration.bin", dtype=np.float32, count=-1).reshape(ntx, nrx, 2)
+coupling_calib = coupling_calib[:, :, 0] + 1j * coupling_calib[:, :, 1]
 
 # Phase calibration
 phase_calib = np.fromfile("phase_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx)
 
 # Frequency calibration
-frequency_calib = np.fromfile("phase_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx)
+frequency_calib = np.fromfile("phase_amp_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx)
 ```
