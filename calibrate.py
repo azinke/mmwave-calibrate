@@ -30,7 +30,7 @@ def coupling_calibration(filename: str, ntx: int, nrx: int,
 
 
 def waveform_calibration(filename: str, cfg: str, **kwargs) -> np.array:
-    """Generate phase and frequency calibration matrices.
+    """Generate phase/amplitude and frequency calibration matrices.
 
     Arguments:
         filename (str): Path to the frame to use for calibration
@@ -70,11 +70,17 @@ def waveform_calibration(filename: str, cfg: str, **kwargs) -> np.array:
 
     peaks_idx = np.argmax(rfft[:, :, ref_bins[0]:ref_bins[1]], axis=-1)
     peaks = np.max(rfft[:, :, ref_bins[0]:ref_bins[1]], axis=-1)
+
+    # Phase and amplitude calibration
+    peaks = peaks[0, 0] / peaks
     phase_calib = np.zeros((ntx, nrx, 2), dtype=np.float64)
     phase_calib[:, :, 0] = np.real(peaks)
     phase_calib[:, :, 1] = np.imag(peaks)
+
+    # Frequency calibration
     dpeak_idx: int = peaks_idx - peaks_idx[0, 0]
     freq_calib = 2 * np.pi * (dpeak_idx / ref) * (fsample / fslope)
+
     return freq_calib, phase_calib
 
 
@@ -207,7 +213,7 @@ if __name__ == "__main__":
                 os.path.join(args.output, "frequency_calibration.bin")
             )
             phase_calib.astype(np.float64).tofile(
-                os.path.join(args.output, "phase_calibration.bin")
+                os.path.join(args.output, "phase_amp_calibration.bin")
             )
             with open(os.path.join(args.output, "calibration.json"), "w") as fh:
                 json.dump(calib_context, fh, indent=2)
