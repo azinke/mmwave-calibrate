@@ -182,10 +182,11 @@ if __name__ == "__main__":
                 args.num_chirp_loops,
                 args.num_samples
             )
+            calib_context["data"] = "coupling_calibration.bin"
             coupling_calib.astype(np.float32).tofile(
-                os.path.join(args.output, "coupling_calibration.bin")
+                os.path.join(args.output, calib_context["data"])
             )
-            with open(os.path.join(args.output, "calibration.json"), "w") as fh:
+            with open(os.path.join(args.output, "coupling_cfg.json"), "w") as fh:
                 json.dump(calib_context, fh, indent=2)
             print("[INFO] Coupling calibration file generated!")
         else:
@@ -209,13 +210,17 @@ if __name__ == "__main__":
                 args.calibration_config,
                 ref=args.reference,
             )
+            calib_context["data"] = {
+                "frequency": "frequency_calibration.bin",
+                "phase": "phase_amp_calibration.bin"
+            }
             freq_calib.astype(np.float64).tofile(
-                os.path.join(args.output, "frequency_calibration.bin")
+                os.path.join(args.output, calib_context["data"]["frequency"])
             )
             phase_calib.astype(np.float64).tofile(
-                os.path.join(args.output, "phase_amp_calibration.bin")
+                os.path.join(args.output, calib_context["data"]["phase"])
             )
-            with open(os.path.join(args.output, "calibration.json"), "w") as fh:
+            with open(os.path.join(args.output, "waveform_calib_cfg.json"), "w") as fh:
                 json.dump(calib_context, fh, indent=2)
             print("[INFO] Frequency and Phase calibration files generated!")
         else:

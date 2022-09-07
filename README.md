@@ -78,7 +78,8 @@ coupling_calib = np.fromfile("counpling_calibration.bin", dtype=np.float32, coun
 coupling_calib = coupling_calib[:, :, 0] + 1j * coupling_calib[:, :, 1]
 
 # Phase calibration
-phase_calib = np.fromfile("phase_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx)
+phase_calib = np.fromfile("phase_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx, 2)
+phase_calib = phase_calib[:, :, 0] + 1j * phase_calib[:, :, 1]
 
 # Frequency calibration
 frequency_calib = np.fromfile("phase_amp_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx)
