@@ -72,10 +72,11 @@ import numpy as np
 
 ntx: int = 12       # Number of TX antenna
 nrx: int = 16       # Number of RX antenna
+ns: int = 256       # Number of samples per chirp
 
 # Coupling calibration
-coupling_calib = np.fromfile("counpling_calibration.bin", dtype=np.float32, count=-1).reshape(ntx, nrx, 2)
-coupling_calib = coupling_calib[:, :, 0] + 1j * coupling_calib[:, :, 1]
+coupling_calib = np.fromfile("counpling_calibration.bin", dtype=np.float32, count=-1).reshape(ntx, nrx, ns, 2)
+coupling_calib = coupling_calib[:, :, :, 0] + 1j * coupling_calib[:, :, :, 1]
 
 # Phase calibration
 phase_calib = np.fromfile("phase_calibration.bin", dtype=np.float64, count=-1).reshape(ntx, nrx, 2)

@@ -25,8 +25,8 @@ def coupling_calibration(filename: str, ntx: int, nrx: int,
     frame = np.fromfile(filename, dtype=np.int16, count=-1).reshape(
         ntx, nrx, nc, ns, 2
     )
-    frame = np.mean(frame, axis=(2, 3))
-    return frame
+    _frame = np.mean(frame, 2)
+    return _frame
 
 
 def waveform_calibration(filename: str, cfg: str, **kwargs) -> np.array:
@@ -182,6 +182,7 @@ if __name__ == "__main__":
                 args.num_chirp_loops,
                 args.num_samples
             )
+            calib_context["ns"] = args.num_samples
             calib_context["data"] = "coupling_calibration.bin"
             coupling_calib.astype(np.float32).tofile(
                 os.path.join(args.output, calib_context["data"])
