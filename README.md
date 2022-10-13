@@ -1,8 +1,8 @@
 # MMWave Calibrate
 
-Tool to generate the calibrtion matrices for the MMWCAS-RF-EVM radar.
+Tool to generate the calibration matrices for the MMWCAS-RF-EVM radar.
 
-This tool allow to regenrate three types of calibration matrices:
+This tool allows the generation of three types of calibration matrices:
 - Coupling calibration
 - Phase and amplitude calibration
 - Frequency calibration
@@ -11,7 +11,7 @@ For generating the coupling calibration, one need to record some data with
 the MMWCAS-RF evaluation module, with no target in sight.
 
 For the frequency and phase calibration, at target (more precisely a corner
-reflector) should be placed at a knwon distance (knwon as the reference distance)
+reflector) should be placed at a known distance (known as the reference distance)
 of the radar and aligned with its center of coordinate.
 
 The recorded data in both cases must be repacked using the
@@ -63,7 +63,7 @@ python calibrate.py -c -i /home/user/calib0/frame_1.bin
 python calibrate.py -w -f config/default-calib.json -i /home/user/calib1/frame_1.bin -ref 5.0
 ```
 
-**NOTE**: Be careful and make sure to use the appropriate recording for the correcding calibration.
+**NOTE**: Be careful and make sure to use the appropriate recording for each type of calibration.
 
 ## Reading the calibration files
 
